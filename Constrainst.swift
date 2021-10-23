@@ -84,7 +84,7 @@ extension UIView {
         ]
     }
     
-    func getLayoutGuide(_ ignoreSaveArea : Bool = false) -> LayoutGuide { LayoutGuide.getFrom( ignoreSaveArea ? self.safeAreaLayoutGuide : self )!}
+    func getLayoutGuide(_ ignoreSaveArea : Bool = false) -> LayoutGuide { LayoutGuide.getFrom( ignoreSaveArea ? self : self.safeAreaLayoutGuide  )!}
     
     func stretch(On view : UIView, ignoreSaveArea : Bool = false, angles : Array<ViewAngle>? = nil) -> Array<NSLayoutConstraint> {
         let sups = view.getLayoutGuide(ignoreSaveArea)
@@ -164,33 +164,19 @@ extension UIView {
 extension UIView {
     /// Returns a constraint based on the anchor you selected, value and parent of the current view
     func leadingAnchor(_ offsetFromSuperview : CGFloat = 0, ignoreSaveArea : Bool = true) -> NSLayoutConstraint{
-        if ignoreSaveArea {
-            return leadingAnchor.constraint(equalTo: superview!.leadingAnchor, constant: offsetFromSuperview)
-        } else {
-            return leadingAnchor.constraint(equalTo: superview!.safeAreaLayoutGuide.leadingAnchor, constant: offsetFromSuperview)
-        }
+        return leadingAnchor.constraint(equalTo: superview!.getLayoutGuide(ignoreSaveArea).leadingAnchor, constant: offsetFromSuperview)
     }
     /// Returns a constraint based on the anchor you selected, value and parent of the current view
     func trailingAnchor(_ offsetFromSuperview : CGFloat = 0, ignoreSaveArea : Bool = true) -> NSLayoutConstraint{
-        if ignoreSaveArea {
-            return trailingAnchor.constraint(equalTo: superview!.trailingAnchor, constant: offsetFromSuperview)
-        }
-        return trailingAnchor.constraint(equalTo: superview!.safeAreaLayoutGuide.trailingAnchor, constant: offsetFromSuperview)
-        
+        return trailingAnchor.constraint(equalTo: superview!.getLayoutGuide(ignoreSaveArea).trailingAnchor, constant: offsetFromSuperview)
     }
     /// Returns a constraint based on the anchor you selected, value and parent of the current view
     func topAnchor(_ offsetFromSuperview : CGFloat = 0, ignoreSaveArea : Bool = true) -> NSLayoutConstraint{
-        if ignoreSaveArea {
-            return topAnchor.constraint(equalTo: superview!.topAnchor, constant: offsetFromSuperview)
-        }
-        return topAnchor.constraint(equalTo: superview!.safeAreaLayoutGuide.topAnchor, constant: offsetFromSuperview)
+        return topAnchor.constraint(equalTo: superview!.getLayoutGuide(ignoreSaveArea).topAnchor, constant: offsetFromSuperview)
     }
     /// Returns a constraint based on the anchor you selected, value and parent of the current view
     func bottomAnchor(_ offsetFromSuperview : CGFloat = 0, ignoreSaveArea : Bool = true) -> NSLayoutConstraint{
-        if ignoreSaveArea {
-            return bottomAnchor.constraint(equalTo: superview!.bottomAnchor, constant: offsetFromSuperview)
-        }
-        return bottomAnchor.constraint(equalTo: superview!.safeAreaLayoutGuide.bottomAnchor, constant: offsetFromSuperview)
+        return bottomAnchor.constraint(equalTo: superview!.getLayoutGuide(ignoreSaveArea).bottomAnchor, constant: offsetFromSuperview)
     }
     
     /// Returns a constraint const which you set
@@ -201,19 +187,12 @@ extension UIView {
         widthAnchor.constraint(equalToConstant: const)}
     /// Returns a constraint based on the angle you selected, value and parent of the current view
     func centerYAnchor(_ offsetFromSuperview : CGFloat = 0, ignoreSaveArea : Bool = true) -> NSLayoutConstraint{
-        if ignoreSaveArea {
-            return centerYAnchor.constraint(equalTo: superview!.centerYAnchor, constant: offsetFromSuperview)
-        }
-        return centerYAnchor.constraint(equalTo: superview!.safeAreaLayoutGuide.centerYAnchor, constant: offsetFromSuperview)
+         return centerYAnchor.constraint(equalTo: superview!.getLayoutGuide(ignoreSaveArea).centerYAnchor, constant: offsetFromSuperview)
     }
     /// Returns a constraint based on the angle you selected, value and parent of the current view
     func centerXAnchor(_ offsetFromSuperview : CGFloat = 0,ignoreSaveArea : Bool = true) -> NSLayoutConstraint{
-        if ignoreSaveArea {
-            return centerXAnchor.constraint(equalTo: superview!.safeAreaLayoutGuide.centerXAnchor, constant: offsetFromSuperview)
-        }
-        return centerXAnchor.constraint(equalTo: superview!.centerXAnchor, constant: offsetFromSuperview)
-        
-    }
+        return centerXAnchor.constraint(equalTo: superview!.getLayoutGuide(ignoreSaveArea).centerXAnchor, constant: offsetFromSuperview)
+     }
     
 }
 
